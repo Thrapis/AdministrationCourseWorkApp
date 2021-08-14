@@ -1,0 +1,135 @@
+﻿@using TheRamShop.Models.PageModels
+@{
+    ViewBag.Title = "Product Info";
+}
+
+<form name="cart_quantity" action="https://phoenixcart.org/demo/product_info.php?products_id=9&amp;currency=USD&amp;action=add_product" method="post" role="form">
+    <input name="formid" type="hidden" value="c0059d362aa299e908f28b93073b2abff66dfff97919f1c31fdc0e0ed5597498" class="form-control">
+
+    <div class="row is-product">
+        <div class="col-sm-9 cm-pi-name">
+            <h1 class="display-4">@ViewBag.Product.Name</h1>
+        </div>
+
+
+        <div class="col-sm-3 cm-pi-price">
+            <h2 class="display-4 text-left text-sm-right">
+                <span class="productPrice">@ViewBag.Product.GetPrice()</span>
+            </h2>
+        </div>
+
+
+        <div class="col-sm-12 cm-pi-review-stars">
+            <ul class="list-inline">
+                <li class="list-inline-item 0">@ViewBag.Reviews.Count Reviews</li>
+                <li class="list-inline-item border-left ml-2 pl-3">
+                    @if (ViewBag.Reviews.Count == 0)
+                    {
+                        <a href="@Url.Action("MakeReview******", "Catalog")">Be the first to review this product</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("MakeReview * *****", "Catalog")">Add Your Review</a>
+                    }
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="col-sm-12 cm-pi-modular">
+            <div class="row">
+                <div class="col-sm-7">
+                    <div class="row">
+                        <div class="col-sm-12 pi-gallery">
+                            <a href="#lightbox" class="lb" data-toggle="modal" data-slide="0">
+                                <img src="@ViewBag.Product.GetPhotoForPage()" border="0" alt="Lime" class="img-fluid" title="@ViewBag.Product.Name">
+                            </a>
+                        </div>
+                        <div class="col-sm-12 pi-img-disclaimer">
+                            <div class="alert alert-light mt-2">
+                                Product may vary slightly from image representation.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="row">
+                        <div class="col-sm-12 pi-options-attributes mt-2">
+                            <h6>Available Options</h6>
+
+                            <div class="form-group row">
+                                <label for="input_1" class="col-form-label col-sm-3 text-left text-sm-right">Box Size</label>
+                                <div class="col-sm-9">
+                                    <select name="id[1]" required="" aria-required="true" id="input_1" class="form-control"><option value="" selected="selected">--- Please Select ---</option><option value="1">12</option><option value="2">24 (+$5.00)</option></select>
+                                    <span class="form-control-feedback text-danger"><i class="fas fa-asterisk"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 pi-buy-button mt-2">
+                            <button data-has-attributes="0" data-in-stock="995" data-product-id="9" class="btn btn-success btn-block btn-lg btn-product-info btn-buy" type="submit">
+                                <span class="fas fa-shopping-cart" aria-hidden="true"></span> Add To Cart
+                            </button>
+                            <input name="products_id" type="hidden" value="9" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-12 cm-pi-description">
+            <div class="description">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Turpis massa tincidunt dui ut ornare lectus sit amet est. Imperdiet proin fermentum leo vel orci porta. Cursus metus aliquam eleifend mi in nulla posuere. Nunc scelerisque viverra mauris in. Amet risus nullam eget felis eget nunc lobortis mattis aliquam. Blandit volutpat maecenas volutpat blandit aliquam. Fermentum iaculis eu non diam.</p>
+
+                <p>Image by <a href="https://pixabay.com/users/Eelffica-52436/">Eelffica</a> from <a href="https://pixabay.com/">Pixabay</a></p>
+
+                <p>Id donec ultrices tincidunt arcu non sodales. Id ornare arcu odio ut sem. Velit sed ullamcorper morbi tincidunt ornare massa eget. Mi eget mauris pharetra et ultrices neque. Pellentesque dignissim enim sit amet venenatis. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus. Venenatis cras sed felis eget velit. Justo eget magna fermentum iaculis eu non diam phasellus vestibulum. Sollicitudin aliquam ultrices sagittis orci a scelerisque purus semper eget. Ultrices tincidunt arcu non sodales neque sodales ut. Integer malesuada nunc vel risus.</p>
+
+                <p>Nunc sed id semper risus in hendrerit gravida. In cursus turpis massa tincidunt dui ut ornare lectus. Mattis rhoncus urna neque viverra justo nec ultrices dui. Ac tincidunt vitae semper quis lectus nulla at. Dui vivamus arcu felis bibendum ut. Ultricies tristique nulla aliquet enim tortor. Cras pulvinar mattis nunc sed blandit libero volutpat sed. Nisl nunc mi ipsum faucibus. Quis commodo odio aenean sed adipiscing. Tortor posuere ac ut consequat. Felis eget nunc lobortis mattis aliquam faucibus purus in. Aliquet lectus proin nibh nisl condimentum id venenatis a. Rhoncus mattis rhoncus urna neque viverra. Proin nibh nisl condimentum id. Dolor morbi non arcu risus.</p>
+            </div>
+        </div>
+
+        @if (ViewBag.Reviews.Count != 0)
+        {
+            <div class="col-sm-12 cm-pi-reviews">
+                <h4>What our customers say...</h4>
+                @foreach (Review el in ViewBag.Reviews)
+                {
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <blockquote class="blockquote">
+                                <p class="font-weight-lighter">@el.ReviewText</p>
+                                <footer class="blockquote-footer">
+                                    Rated <span class="text-warning" title="@el.Stars.ToString().Replace(",", ".")">
+                                        @for (float stars = el.Stars, counter = 0; counter < 5; counter++)
+                                        {
+                                            if (stars - 1 >= 0)
+                                            {
+                                                <i class="fas fa-star"></i>
+                                                stars--;
+                                                continue;
+                                            }
+                                            else if (stars == 0.5f)
+                                            {
+                                                <i class="fas fa-star-half"></i>
+                                                stars -= 0.5f;
+                                                continue;
+                                            }
+                                            else
+                                            {
+                                                <i class="fas fa-star-o"></i>
+                                                continue;
+                                            }
+                                        }
+                                    </span> by <cite title="@el.Author">@el.Author</cite>
+                                </footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+</form>
+

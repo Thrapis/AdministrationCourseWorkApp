@@ -1,0 +1,70 @@
+﻿@using TheRamShop.Models.PageModels
+@{
+    ViewBag.Title = "Catalog";
+}
+
+<div class="row">
+    <div class="col-sm-12 title cm-i-title">
+        <h1 class="display-4">Welcome on The Ram Shop</h1>
+    </div>
+
+
+    @*<div class="col-sm-12 cm-i-customer-greeting">
+        <div class="alert alert-info" role="alert">
+            <h4>This Demo shop is based on CE Phoenix Cart v1.0.8.5</h4>
+        </div>
+    </div>*@
+
+
+    <div class="col-sm-12 cm-i-card-products">
+        <h4>New Products For August</h4>
+
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+            @foreach (var el in ViewBag.ProductList)
+            {
+                <div class="col mb-2">
+                    <div class="card h-100 is-product" data-is-special="0" data-product-price="8.99" data-product-manufacturer="2">
+                        <a href="@el.Url">
+                            <img src="@el.GetPhotoForPage()" border="0" alt="@el.Name" width="100" height="80" class="card-img-top img-fluid" title="@el.Name">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a href="@el.Url">@el.Name</a>
+                            </h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                @el.GetPrice()
+                            </h6>
+                        </div>
+                        <div class="card-footer bg-white pt-0 border-0">
+                            <div class="btn-group" role="group">
+                                <a class="btn btn-info btn-product-listing btn-view" href="@el.Url" id="btn1">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                @if (el.FastBuy)
+                                {
+                                    <a data-has-attributes="0" data-in-stock="995" data-product-id="9" class="btn btn-light btn-product-listing btn-buy" href="@el.Url&action=buy_now" id="btn2">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <div class="col-sm-12 cm-i-upcoming-products">
+        <table class="table table-striped table-sm">
+            <tbody>
+                <tr>
+                    <th>Upcoming Products</th>
+                    <th class="text-right">Date Expected</th>
+                </tr>
+                <tr>  <td><a href="https://phoenixcart.org/demo/product_info.php?products_id=8">Grapefruit</a></td>  <td class="text-right">05/24/2022</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

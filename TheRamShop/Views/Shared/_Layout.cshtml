@@ -1,0 +1,298 @@
+﻿@using TheRamShop.Models.PageModels
+<!DOCTYPE html>
+<html class="">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body>
+    <nav class="navbar bg-light navbar-light floating navbar-expand-sm cm-navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggler nb-hamburger-button" data-toggle="collapse" data-target="#collapseCoreNav" aria-controls="collapseCoreNav" aria-expanded="false" aria-label="Toggle Navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a class="navbar-brand nb-brand" href="/">
+                    <span>The Ram Shop</span>
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="collapseCoreNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown nb-account">
+                        <a class="nav-link dropdown-toggle" href="#" id="navDropdownAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i title="My Profile" class="fas fa-user fa-fw"></i>
+                            <span class="d-inline d-sm-none d-md-inline"> My Profile</span> 
+                            <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navDropdownAccount">
+                            <a class="dropdown-item" href="@Url.Action("LogIn", "Account")">
+                                <i class="fas fa-sign-in-alt fa-fw"></i> Log In
+                            </a>
+                            <a class="dropdown-item" href="@Url.Action("Register", "Account")">
+                                <i class="fas fa-fw fa-pencil-alt"></i> Register
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item notwork" href="@Url.Action("", "")">My Profile</a>
+                            <a class="dropdown-item notwork" href="@Url.Action("", "")">My Orders</a>
+                            <a class="dropdown-item notwork" href="@Url.Action("", "")">My Address Book</a>
+                            <a class="dropdown-item notwork" href="@Url.Action("", "")">My Password</a>
+                        </div>
+                    </li>
+                    <li class="nav-item nb-special-offers">
+                        <a class="nav-link" href="@Url.Action("", "")">
+                            <i title="Special Offers" class="fas fa-fire"></i>
+                            <span class="d-inline d-sm-none d-md-inline"> Special Offers</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown nb-currencies">
+                        <a class="nav-link dropdown-toggle" href="#" id="navDropdownCurrencies" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i title="Selected Currency: @ViewBag.Currency" class="fas fa-comments-dollar"></i>
+                            <span class="d-inline d-sm-none d-md-inline"> @ViewBag.Currency</span> <span class="caret"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navDropdownCurrencies">
+                            <a class="dropdown-item" href="@ViewBag.CurrentUrl?currency=USD">U.S. Dollar</a>
+                            <a class="dropdown-item" href="@ViewBag.CurrentUrl?currency=EUR">Euro</a>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item dropdown nb-shopping-cart">
+                        <a class="nav-link dropdown-toggle" href="#" id="navDropdownCart" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i title="Shopping Cart" class="fas fa-shopping-cart fa-fw"></i>
+                            <span class="d-inline d-sm-none d-md-inline"> 
+                            <span class="cart-count">0</span> item(s)</span> 
+                            <span class="caret"></span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navDropdownCart">
+                            <a class="dropdown-item notwork" href="@Url.Action("", "")">
+                                <span class="cart-count">0</span> item(s), <span class="cart-value">$0.00</span>
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <div id="bodyWrapper" class="container-fluid pt-2">
+        <div class="row">
+            <div class="col-sm-6 pt-1">
+                <a href="/">
+                    <img src="~/Images/ram_title.png" style="width: 300px;" />
+                </a>
+            </div>
+            <div class="col-sm-6 pt-1 align-self-center">
+                <form name="quick_find" action="/" method="get">
+                    <div class="input-group">
+                        <input name="keywords" type="search" required="" aria-required="true" autocomplete="off" aria-label="Search" placeholder="Search" class="form-control">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-info">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-12 pt-1">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/">
+                                <i class="fas fa-home"></i>
+                                <span class="sr-only">Home</span>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item notwork">
+                            <a href="@Url.Action("Product", "Catalog")">Catalog</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+
+        <div class="body-sans-header">
+
+
+            <div class="row">
+                <div id="bodyContent" class="col order-1 order-md-6">
+                    @RenderBody()
+                </div> <!-- bodyContent //-->
+
+
+                <div id="columnLeft" class="col-md-2 order-6 order-md-1">
+                    <div class="card mb-2 bm-categories">
+                        <div class="card-header">
+                            Categories
+                        </div>
+                        <div class="list-group list-group-flush">
+                            @foreach (Hyperlink el in ViewBag.Categories)
+                            {
+                                <a class="list-group-item list-group-item-action" href="@el.Url">@el.Name</a>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card mb-2 bm-manufacturers">
+                        <div class="card-header">
+                            Manufacturers
+                        </div>
+                        <div class="list-group list-group-flush">
+                            @foreach (Hyperlink el in ViewBag.Manufacturers)
+                            {
+                                <a class="list-group-item list-group-item-action" href="@el.Url">@el.Name</a>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card mb-2 is-product bm-whats-new" data-is-special="0" data-product-price="4.99" data-product-manufacturer="2">
+                        <div class="card-header">
+                            <a href="@Url.Action("", "")">What's New?</a>
+                        </div>
+                        <a href="@ViewBag.WhatsNew.GetPhotoForPage()">
+                            <img src="@ViewBag.WhatsNew.GetPhotoForPage()" border="0" alt="@ViewBag.WhatsNew.Name" class="card-img-top img-fluid" title="@ViewBag.WhatsNew.Name">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="@ViewBag.WhatsNew.Url">@ViewBag.WhatsNew.Name</a></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">@ViewBag.WhatsNew.GetPrice()</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="columnRight" class="col-md-2 order-last">
+                    <div class="card mb-2 bm-best-sellers">
+                        <div class="card-header">Bestsellers</div>
+                        <div class="list-group list-group-flush">
+                            @foreach (Hyperlink el in ViewBag.Bestsellers)
+                            {
+                                <a class="list-group-item list-group-item-action" href="@el.Url">@el.Name</a>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="card mb-2 is-product bm-reviews" data-is-special="0" data-product-price="4.99" data-product-manufacturer="2">
+                        <div class="card-header">Reviews</div>
+                        @foreach (Review el in ViewBag.ReviewsPreview)
+                        {
+                            <a href="@el.Product.Url">
+                                <img src="@el.Product.GetPhotoForPage()" border="0" alt="@el.Product.Name" class="card-img-top img-fluid" title="@el.Product.Name">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a href="@el.Product.Url">@el.Product.Name</a>
+                                </h5>
+                                <h6 class="card-subtitle mb-2 text-muted">@el.Product.GetPrice()</h6>
+                                <span class="text-warning" title="@el.GetDotDelimetrStars()">
+                                    @for (float stars = el.Stars, counter = 0; counter < 5; counter++)
+                                    {
+                                        if (stars - 1 >= 0)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                            stars--;
+                                            continue;
+                                        }
+                                        else if (stars == 0.5f)
+                                        {
+                                            <i class="fas fa-star-half"></i>
+                                            stars -= 0.5f;
+                                            continue;
+                                        }
+                                        else
+                                        {
+                                            <i class="fas fa-star-o"></i>
+                                            continue;
+                                        }
+                                    }
+                                </span>
+                                <br>@el.GetCuttedReview(59)
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="pt-2">
+        <div class="bg-light m-0 pt-2 pb-2">
+            <div class="container-fluid">
+                <div class="footer">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-3 cm-footer-information-links">
+                            <h4>Information</h4>
+                            <nav class="nav nav-pills flex-column">
+                                <a class="nav-link pl-0 notwork" href="@Url.Action("", "")">Privacy &amp; Cookie Policy</a>
+                                <a class="nav-link pl-0 notwork" href="@Url.Action("", "")">Terms &amp; Conditions</a>
+                                <a class="nav-link pl-0 notwork" href="@Url.Action("", "")">Shipping &amp; Returns</a>
+                                <a class="nav-link pl-0 notwork" href="@Url.Action("", "")">Contact Us</a>
+                            </nav>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 cm-footer-account">
+                            <h4>Customer Services</h4>
+                            <nav class="nav nav-pills flex-column">
+                                <a class="nav-link pl-0" href="@Url.Action("Register", "Account")">Create a Profile</a>
+                                <a class="nav-link mt-2 btn btn-success btn-block" role="button" href="@Url.Action("LogIn", "Account")">
+                                    <i class="fas fa-sign-in-alt"></i> Existing Customer? Log In
+                                </a>
+                            </nav>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 cm-footer-contact-us">
+                            <h4>How To Contact Us</h4>
+                            <address>
+                                <strong>CE Phoenix Cart Demo</strong><br>
+                                Address Line 1<br>
+                                Address Line 2<br>
+                                Country<br>
+                                Phone<br>
+                                <i class="fas fa-phone fa-fw mr-1" title="Telephone"></i>555-1234<br>
+                                <i class="fas fa-at fa-fw mr-1" title="Email"></i>admin@theramshop.org
+                            </address>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a class="btn btn-success btn-block notwork" role="button" href="@Url.Action("", "")">
+                                        <i class="fas fa-paper-plane"></i> Contact Us
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="col-sm-6 col-md-3 cm-footer-text">
+                            <h4>About Us</h4>
+                            <p>Something about our The Ram Shop</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-dark text-white pt-3 pb-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col text-sm-left">Copyright &copy; @DateTime.Now.Year - The Ram Shop</div>
+                    <div class="col text-sm-right">Someting else</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,64 @@
+﻿@model TheRamShop.Models.Authentication.LoginModel
+@{
+    ViewBag.Title = "Log In";
+}
+
+<div class="row">
+    <div class="col-sm-12 cm-login-title">
+        <h1 class="display-4">Welcome, Please Sign In</h1>
+    </div>
+
+
+    <div class="col-sm-6 cm-login-form ">
+        <p class="alert alert-success" role="alert">I am a returning customer.</p>
+
+        @using (Html.BeginForm("LogIn", "Home"))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true)
+
+            <div class="form-group row">
+                <label for="inputEmail" class="col-form-label col-sm-3 text-left text-sm-right">E-Mail Address</label>
+                <div class="col-sm-9">
+                    <input name="Email" type="email" required="" aria-required="true" id="inputEmail" autocomplete="username email" placeholder="" class="form-control">
+                    <span class="form-control-feedback text-danger"><i class="fas fa-asterisk"></i></span>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="inputPassword" class="col-form-label col-sm-3 text-left text-sm-right">Password</label>
+                <div class="col-sm-9"><input name="Password" type="password" required="" aria-required="true" id="inputPassword" autocapitalize="none" autocomplete="new-password" class="form-control"><span class="form-control-feedback text-danger"><i class="fas fa-asterisk"></i></span></div>
+            </div>
+
+            <p class="text-right">
+                <button class="btn btn-success btn-block" type="submit">
+                    <span class="fas fa-sign-in-alt" aria-hidden="true"></span> Sign In
+                </button>
+            </p>
+        }
+    </div>
+
+
+    <div class="col-sm-6 cm-create-account-link">
+        <p class="alert alert-info" role="alert">I am a new customer.</p>
+        <p>By creating a Profile at CE Phoenix Cart Demo you will be able to shop faster, be up to date on an orders status, and keep track of the orders you have previously made.</p>
+
+        <p class="text-right">
+            <a class="btn btn-primary btn-block" href="@Url.Action("Register", "Account")" id="btn1">
+                <span class="fas fa-angle-right" aria-hidden="true"></span> Continue
+            </a>
+        </p>
+    </div>
+
+
+    <div class="col-sm-6 cm-forgot-password">
+        <div class="alert alert-warning" role="alert">Did you forget your Password?  No problem!</div>
+        <p>
+            <a class="btn btn-warning btn-block" href="/" id="btn2">
+                <span class="fas fa-unlock-alt" aria-hidden="true"></span> Reset Password
+            </a>
+        </p>
+    </div>
+
+</div>
