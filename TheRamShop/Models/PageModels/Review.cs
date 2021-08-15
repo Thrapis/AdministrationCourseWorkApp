@@ -7,12 +7,12 @@ namespace TheRamShop.Models.PageModels
 {
     public class Review
     {
-        public ProductInfo Product { get; private set; }
+        public ProductCard Product { get; private set; }
         public string Author { get; private set; }
         public float Stars { get; private set; }
         public string ReviewText { get; private set; }
 
-        public Review(ProductInfo product, string author, float stars, string reviewText)
+        public Review(ProductCard product, string author, float stars, string reviewText)
         {
             Product = product;
             Author = author;

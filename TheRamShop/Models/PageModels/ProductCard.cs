@@ -7,7 +7,7 @@ using TheRamShop.Models.DataEntities;
 
 namespace TheRamShop.Models.PageModels
 {
-    public class ProductInfo
+    public class ProductCard
     {
         public string Name { get; private set; }
         public string Url { get; private set; }
@@ -16,7 +16,7 @@ namespace TheRamShop.Models.PageModels
         public bool FastBuy { get; private set; }
         public byte[] Photo { get; private set; }
 
-        public ProductInfo(string name, string url, decimal cost, string currency, bool singleBuy, byte[] photo)
+        public ProductCard(string name, string url, decimal cost, string currency, bool singleBuy, byte[] photo)
         {
             Name = name;
             Url = url;
@@ -26,7 +26,7 @@ namespace TheRamShop.Models.PageModels
             Photo = photo;
         }
 
-        public ProductInfo(Controller controller, RamProduct product)
+        public ProductCard(Controller controller, RamProduct product)
         {
             Name = product.Manufacturer + " " + product.Name;
             Url = controller.Url.Action("Product", "Catalog", new { subcategory = product.Manufacturer, name = product.Name});
@@ -35,6 +35,7 @@ namespace TheRamShop.Models.PageModels
             FastBuy = true;
             Photo = product.Photo;
         }
+
         public string GetDotDelimetrCost()
         {
             return Cost.ToString().Replace(",", ".");

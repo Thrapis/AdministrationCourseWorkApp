@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -15,10 +16,11 @@ namespace TheRamShop.Models.DataEntities
         public string Voltage { get; set; }
         public byte[] Photo { get; set; }
         public decimal Cost { get; set; }
+        [Column("NEW_COST")]
         public decimal? NewCost { get; set; }
         public string Currency { get; set; }
+        [Column("DATE_ADDED")]
         public DateTime DateAdded { get; set; }
-        
 
         public string GetPhotoForPage()
         {

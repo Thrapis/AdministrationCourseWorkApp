@@ -21,7 +21,7 @@ namespace TheRamShop.Controllers
             DefaultPreparations.LoadPrimaryInfo(this);
 
             RamProductProvider productProvider = new RamProductProvider(MRConnection.GetConnection());
-            ProductInfo product = new ProductInfo(this, productProvider.GetByName(name));
+            ProductCard product = new ProductCard(this, productProvider.GetByName(name));
 
             //ProductInfo product = new ProductInfo("Lime", Url.Action("ProductInfo", "Catalog", new { subcategory = subcategory, product_id = product_id }), 8.99m, "$", true, new byte[] { });
             List<Review> reviews = new List<Review>();

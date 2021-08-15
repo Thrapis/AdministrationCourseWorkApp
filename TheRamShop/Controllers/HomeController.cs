@@ -24,10 +24,10 @@ namespace TheRamShop.Controllers
 
             RamProductProvider productProvider = new RamProductProvider(MRConnection.GetConnection());
 
-            List<ProductInfo> products = new List<ProductInfo>();
+            List<ProductCard> products = new List<ProductCard>();
             foreach (RamProduct element in productProvider.GetAll())
             {
-                products.Add(new ProductInfo(this, element));
+                products.Add(new ProductCard(this, element));
             }
             /*products.Add(new ProductInfo("Apple", Url.Action("Product", "Catalog", new { subcategory = "16GB", name = "Apple" }), 8.99m, "$", true, new byte[] { }));
             products.Add(new ProductInfo("Orange", Url.Action("Product", "Catalog", new { subcategory = "8GB", name = "Orange" }), 7.99m, "$", true, new byte[] { }));

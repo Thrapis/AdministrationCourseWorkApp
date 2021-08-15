@@ -27,6 +27,11 @@ namespace TheRamShop.Models.DataProviders
             return _connection.QueryFirstOrDefault<RamProduct>($@"select * from Ram_Product where name = N'{name}'");
         }
 
+        public IEnumerable<string> GetAllManufacturers()
+        {
+            return _connection.Query<string>($@"select distinct Manufacturer from Ram_Product");
+        }
+
         public void Dispose()
         {
             _connection.Dispose();

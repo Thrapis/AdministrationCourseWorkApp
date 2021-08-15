@@ -59,8 +59,10 @@
                             <span class="d-inline d-sm-none d-md-inline"> @ViewBag.Currency</span> <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navDropdownCurrencies">
-                            <a class="dropdown-item" href="@ViewBag.CurrentUrl?currency=USD">U.S. Dollar</a>
-                            <a class="dropdown-item" href="@ViewBag.CurrentUrl?currency=EUR">Euro</a>
+                            @foreach (CurrencySelection currency in ViewBag.CurrencyList)
+                            {
+                                <a class="dropdown-item" href="@currency.RedirectAndSetUrl">@currency.LongName</a>
+                            }
                         </div>
                     </li>
 
@@ -163,7 +165,7 @@
                         <div class="card-header">
                             <a href="@Url.Action("", "")">What's New?</a>
                         </div>
-                        <a href="@ViewBag.WhatsNew.GetPhotoForPage()">
+                        <a href="@ViewBag.WhatsNew.Url">
                             <img src="@ViewBag.WhatsNew.GetPhotoForPage()" border="0" alt="@ViewBag.WhatsNew.Name" class="card-img-top img-fluid" title="@ViewBag.WhatsNew.Name">
                         </a>
                         <div class="card-body">

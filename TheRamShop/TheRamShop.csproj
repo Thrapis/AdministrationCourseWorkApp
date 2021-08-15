@@ -133,15 +133,21 @@
     </Compile>
     <Compile Include="Models\DataBase\MRConnection.cs" />
     <Compile Include="Models\DataEntities\AccountInfo.cs" />
+    <Compile Include="Models\DataEntities\Currency.cs" />
     <Compile Include="Models\DataProviders\AuthenticationProvider.cs" />
     <Compile Include="Models\Authentication\LoginModel.cs" />
     <Compile Include="Models\Authentication\RegisterModel.cs" />
     <Compile Include="Models\DataEntities\RamProduct.cs" />
     <Compile Include="Models\DataPreparation\DefaultPreparations.cs" />
+    <Compile Include="Models\DataProviders\CurrencyProvider.cs" />
     <Compile Include="Models\DataProviders\RamProductProvider.cs" />
     <Compile Include="Models\ImageTools\ImageHelper.cs" />
+    <Compile Include="Models\PageModels\CurrencySelection.cs" />
     <Compile Include="Models\PageModels\Hyperlink.cs" />
-    <Compile Include="Models\PageModels\ProductInfo.cs" />
+    <Compile Include="Models\PageModels\ProductCard.cs" />
+    <Compile Include="Models\PageModels\ProductPage.cs" />
+    <Compile Include="Models\PageModels\ProductPreview.cs" />
+    <Compile Include="Models\PageModels\ProductSetSelection.cs" />
     <Compile Include="Models\PageModels\Review.cs" />
     <Compile Include="Models\Statement\SessionManager.cs" />
     <Compile Include="Models\Statement\CookiesManager.cs" />

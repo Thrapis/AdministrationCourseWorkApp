@@ -7,7 +7,7 @@ namespace TheRamShop.Models.DataEntities
 {
     public class AccountInfo
     {
-        public string Login { get; set; }
+        public string Email { get; set; }
         public string FullName { get; set; }
         public int AccessLevel { get; set; }
         public byte[] Photo { get; set; }

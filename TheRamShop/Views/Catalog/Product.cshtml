@@ -7,15 +7,15 @@
     <input name="formid" type="hidden" value="c0059d362aa299e908f28b93073b2abff66dfff97919f1c31fdc0e0ed5597498" class="form-control">
 
     <div class="row is-product">
-        <div class="col-sm-9 cm-pi-name">
-            <h1 class="display-4">@ViewBag.Product.Name</h1>
+        <div class="col-sm-8 cm-pi-name">
+            <h3 class="display-4 display-5">@ViewBag.Product.Name</h3>
         </div>
 
 
-        <div class="col-sm-3 cm-pi-price">
-            <h2 class="display-4 text-left text-sm-right">
+        <div class="col-sm-4 cm-pi-price">
+            <h3 class="display-4 display-5 text-left text-sm-right">
                 <span class="productPrice">@ViewBag.Product.GetPrice()</span>
-            </h2>
+            </h3>
         </div>
 
 
@@ -29,7 +29,7 @@
                     }
                     else
                     {
-                        <a href="@Url.Action("MakeReview * *****", "Catalog")">Add Your Review</a>
+                        <a href="@Url.Action("MakeReview******", "Catalog")">Add Your Review</a>
                     }
                 </li>
             </ul>
@@ -60,7 +60,10 @@
                             <div class="form-group row">
                                 <label for="input_1" class="col-form-label col-sm-3 text-left text-sm-right">Box Size</label>
                                 <div class="col-sm-9">
-                                    <select name="id[1]" required="" aria-required="true" id="input_1" class="form-control"><option value="" selected="selected">--- Please Select ---</option><option value="1">12</option><option value="2">24 (+$5.00)</option></select>
+                                    <select name="id[1]" required="" aria-required="true" id="input_1" class="form-control">
+                                        <option value="" selected="selected">--- Please Select ---</option>
+                                        <option value="1">12</option><option value="2">24 (+$5.00)</option>
+                                    </select>
                                     <span class="form-control-feedback text-danger"><i class="fas fa-asterisk"></i></span>
                                 </div>
                             </div>
