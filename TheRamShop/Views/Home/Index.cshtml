@@ -20,7 +20,7 @@
         <h4>New Products For August</h4>
 
         <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
-            @foreach (var el in ViewBag.ProductList)
+            @foreach (ProductCard el in ViewBag.ProductList)
             {
                 <div class="col mb-2">
                     <div class="card h-100 is-product" data-is-special="0" data-product-price="8.99" data-product-manufacturer="2">
@@ -31,9 +31,19 @@
                             <h5 class="card-title">
                                 <a href="@el.Url">@el.Name</a>
                             </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                @el.GetPrice()
-                            </h6>
+                            @if (el.NewPrice != "")
+                            {
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <del>@el.Price</del> <span class="text-danger">now @el.NewPrice</span>
+                                </h6>
+                            }
+                            else
+                            {
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    @el.Price
+                                </h6>
+                            }
+
                         </div>
                         <div class="card-footer bg-white pt-0 border-0">
                             <div class="btn-group" role="group">
@@ -42,7 +52,7 @@
                                 </a>
                                 @if (el.FastBuy)
                                 {
-                                    <a data-has-attributes="0" data-in-stock="995" data-product-id="9" class="btn btn-light btn-product-listing btn-buy" href="@el.Url&action=buy_now" id="btn2">
+                                    <a data-has-attributes="0" data-in-stock="995" data-product-id="9" class="btn btn-light btn-product-listing btn-buy" href="@el.FastBuyUrl" id="btn2">
                                         <i class="fas fa-shopping-cart"></i>
                                     </a>
                                 }

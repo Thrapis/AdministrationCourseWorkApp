@@ -9,6 +9,7 @@ using TheRamShop.Models.PageModels;
 using TheRamShop.Models.Statement;
 using TheRamShop.Models.DataBase;
 using System.Data.SqlClient;
+using TheRamShop.Models.DataEntities.Composite;
 
 namespace TheRamShop.Models.DataPreparation
 {
@@ -16,9 +17,10 @@ namespace TheRamShop.Models.DataPreparation
     {
         public static void LoadPrimaryInfo(Controller controller)
         {
-            SqlConnection connection = MRConnection.GetConnection();
+           SqlConnection connection = MRConnection.GetConnection();
 
-            controller.ViewBag.Currency = GetChoosenCurrency(controller, connection);
+            string currency = GetChoosenCurrency(controller, connection);
+            controller.ViewBag.Currency = currency;
 
             controller.ViewBag.CurrencyList = GetCurrencyList(connection);
 
@@ -26,11 +28,11 @@ namespace TheRamShop.Models.DataPreparation
             
             controller.ViewBag.Manufacturers = GetManufacturers(controller, connection);
 
-            controller.ViewBag.Bestsellers = GetBestsellers(controller, connection);
+            controller.ViewBag.Bestsellers = GetBestsellers(controller, connection, currency);
 
-            controller.ViewBag.ReviewsPreview = GetReviewPreviews(controller, connection);
+            controller.ViewBag.ReviewsPreview = GetReviewPreviews(controller, connection, currency);
 
-            controller.ViewBag.WhatsNew = GetWhatsNew(controller, connection);
+            controller.ViewBag.WhatsNew = GetWhatsNew(controller, connection, currency);
         }
 
         private static string GetCurrentUrl() => HttpContext.Current.Request.Url.AbsolutePath;
@@ -57,8 +59,8 @@ namespace TheRamShop.Models.DataPreparation
             {
                 IEnumerable<Currency> currencies = currencyProvider.GetAll();
                 currency = currencies.First();
+                sessionManager.AddValue("currency", currency);
             }
-                
 
             return currency.IsoName;
         }
@@ -97,12 +99,12 @@ namespace TheRamShop.Models.DataPreparation
             return manufacturers;
         }
 
-        private static List<Hyperlink> GetBestsellers(Controller controller, SqlConnection connection)
+        private static List<Hyperlink> GetBestsellers(Controller controller, SqlConnection connection, string currency)
         {
             RamProductProvider productProvider = new RamProductProvider(connection);
 
             List<Hyperlink> bestsellers = new List<Hyperlink>();
-            foreach (RamProduct element in productProvider.GetAll())
+            foreach (RamProduct element in productProvider.GetAllInCurrency(currency))
             {
                 bestsellers.Add(new Hyperlink(controller, element));
             }
@@ -110,28 +112,31 @@ namespace TheRamShop.Models.DataPreparation
             return bestsellers;
         }
 
-        private static List<Review> GetReviewPreviews(Controller controller, SqlConnection connection)
+        private static List<Review> GetReviewPreviews(Controller controller, SqlConnection connection, string currency)
         {
             Random random = new Random();
+            
+            RamInfoProvider ramInfoProvider = new RamInfoProvider(connection);
+            List<RamInfo> ramInfos = ramInfoProvider.GetAllInCurrency(currency).ToList();
+            RamInfo ramInfo = ramInfos.ElementAt(random.Next(0, ramInfos.Count));
 
-            RamProductProvider productProvider = new RamProductProvider(connection);
-            List<RamProduct> ramProducts = productProvider.GetAll().ToList();
+            List <Review> reviews = new List<Review>();
 
-            List<Review> reviews = new List<Review>();
-            reviews.Add(new Review(new ProductCard(controller, ramProducts.ElementAt(random.Next(0, ramProducts.Count))),
-                "Joe Carter", 3.5f, "Lovely box of crunchy apples and delivered very quickly. Thank You!"));
+            ProductPage productPage = new ProductPage(controller, ramInfo);
+            reviews.Add(new Review(productPage, "Joe Carter", 3.5f,
+                "Lovely box of crunchy apples and delivered very quickly. Thank You!"));
 
             return reviews;
         }
 
-        private static ProductPreview GetWhatsNew(Controller controller, SqlConnection connection)
+        private static ProductPreview GetWhatsNew(Controller controller, SqlConnection connection, string currency)
         {
             Random random = new Random();
 
-            RamProductProvider productProvider = new RamProductProvider(connection);
-            List<RamProduct> ramProducts = productProvider.GetAll().ToList();
+            RamInfoProvider ramInfoProvider = new RamInfoProvider(connection);
+            List<RamInfo> ramInfos = ramInfoProvider.GetAllInCurrency(currency).ToList();
 
-            return new ProductPreview(controller, ramProducts.ElementAt(random.Next(0, ramProducts.Count)));
+            return new ProductPreview(controller, ramInfos.ElementAt(random.Next(0, ramInfos.Count)));
         }
     }
 }

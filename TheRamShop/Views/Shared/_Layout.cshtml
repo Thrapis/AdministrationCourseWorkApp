@@ -1,4 +1,7 @@
 ﻿@using TheRamShop.Models.PageModels
+@{ 
+    ProductPreview whatsNew = ViewBag.WhatsNew;
+}
 <!DOCTYPE html>
 <html class="">
 <head>
@@ -165,12 +168,23 @@
                         <div class="card-header">
                             <a href="@Url.Action("", "")">What's New?</a>
                         </div>
-                        <a href="@ViewBag.WhatsNew.Url">
-                            <img src="@ViewBag.WhatsNew.GetPhotoForPage()" border="0" alt="@ViewBag.WhatsNew.Name" class="card-img-top img-fluid" title="@ViewBag.WhatsNew.Name">
+                        <a href="@whatsNew.Url">
+                            <img src="@whatsNew.GetPhotoForPage()" border="0" alt="@whatsNew.Name" class="card-img-top img-fluid" title="@whatsNew.Name">
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title"><a href="@ViewBag.WhatsNew.Url">@ViewBag.WhatsNew.Name</a></h5>
-                            <h6 class="card-subtitle mb-2 text-muted">@ViewBag.WhatsNew.GetPrice()</h6>
+                            <h5 class="card-title"><a href="@whatsNew.Url">@whatsNew.Name</a></h5>
+                            @if (whatsNew.NewPrice != "")
+                            {
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    <del>@whatsNew.Price</del> <span class="text-danger">now @whatsNew.NewPrice</span>
+                                </h6>
+                            }
+                            else
+                            {
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    @whatsNew.Price
+                                </h6>
+                            }
                         </div>
                     </div>
                 </div>
@@ -197,7 +211,18 @@
                                 <h5 class="card-title">
                                     <a href="@el.Product.Url">@el.Product.Name</a>
                                 </h5>
-                                <h6 class="card-subtitle mb-2 text-muted">@el.Product.GetPrice()</h6>
+                                @if (el.Product.NewPrice != "")
+                                {
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        <del>@el.Product.Price</del> <span class="text-danger">now @el.Product.NewPrice</span>
+                                    </h6>
+                                }
+                                else
+                                {
+                                    <h6 class="card-subtitle mb-2 text-muted">
+                                        @el.Product.Price
+                                    </h6>
+                                }
                                 <span class="text-warning" title="@el.GetDotDelimetrStars()">
                                     @for (float stars = el.Stars, counter = 0; counter < 5; counter++)
                                     {

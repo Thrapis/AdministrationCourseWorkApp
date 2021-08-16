@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using TheRamShop.Models.Authentication;
 using TheRamShop.Models.DataBase;
+using TheRamShop.Models.DataEntities;
+using TheRamShop.Models.DataEntities.Composite;
 using TheRamShop.Models.DataPreparation;
 using TheRamShop.Models.DataProviders;
 using TheRamShop.Models.PageModels;
@@ -20,10 +22,18 @@ namespace TheRamShop.Controllers
         {
             DefaultPreparations.LoadPrimaryInfo(this);
 
-            RamProductProvider productProvider = new RamProductProvider(MRConnection.GetConnection());
-            ProductCard product = new ProductCard(this, productProvider.GetByName(name));
+            RequestManager requestManager = new RequestManager(Request);
+            if (requestManager.GetParamValue("cmd") == "buy_now")
+            {
 
-            //ProductInfo product = new ProductInfo("Lime", Url.Action("ProductInfo", "Catalog", new { subcategory = subcategory, product_id = product_id }), 8.99m, "$", true, new byte[] { });
+            }
+
+            SessionManager sessionManager = new SessionManager(Session);
+            Currency currency = (Currency)sessionManager.GetValue("currency");
+
+            RamInfoProvider ramInfoProvider = new RamInfoProvider(MRConnection.GetConnection());
+            ProductPage product = new ProductPage(this, ramInfoProvider.GetByNameInCurrency(name, currency));
+
             List<Review> reviews = new List<Review>();
             reviews.Add(new Review(product, "James Lay", 5, "Good staff"));
             reviews.Add(new Review(product, "Proto Coto", 3.5f, "Average product. But thanks!"));

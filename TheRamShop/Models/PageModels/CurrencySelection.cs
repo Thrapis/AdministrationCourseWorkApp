@@ -19,5 +19,17 @@ namespace TheRamShop.Models.PageModels
             LongName = currency.FullName;
             RedirectAndSetUrl = redirectUrl + $"?currency={currency.IsoName}";
         }
+
+        public static IEnumerable<CurrencySelection> ConvertToCurrencySelections(string redirectUrl, IEnumerable<Currency> currencies)
+        {
+            List<CurrencySelection> selections = new List<CurrencySelection>();
+
+            foreach (Currency currency in currencies)
+            {
+                selections.Add(new CurrencySelection(redirectUrl, currency));
+            }
+
+            return selections;
+        }
     }
 }

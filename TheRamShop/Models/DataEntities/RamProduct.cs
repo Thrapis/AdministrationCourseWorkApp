@@ -16,16 +16,14 @@ namespace TheRamShop.Models.DataEntities
         public string Voltage { get; set; }
         public byte[] Photo { get; set; }
         public decimal Cost { get; set; }
-        [Column("NEW_COST")]
         public decimal? NewCost { get; set; }
         public string Currency { get; set; }
-        [Column("DATE_ADDED")]
         public DateTime DateAdded { get; set; }
 
         public string GetPhotoForPage()
         {
             string base64String = Convert.ToBase64String(Photo, 0, Photo.Length);
             return "data:image/jpg;base64," + base64String;
-        }
+        } 
     }
 }

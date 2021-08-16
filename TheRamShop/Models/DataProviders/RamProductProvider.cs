@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using TheRamShop.Models.DataEntities;
+using TheRamShop.Models.DataEntities.Composite;
 
 namespace TheRamShop.Models.DataProviders
 {
@@ -19,17 +20,27 @@ namespace TheRamShop.Models.DataProviders
 
         public IEnumerable<RamProduct> GetAll()
         {
-            return _connection.Query<RamProduct>($@"select * from Ram_Product");
+            return _connection.Query<RamProduct>($@"exec GetAllRamProducts");
+        }
+        
+        public IEnumerable<RamProduct> GetAllInCurrency(string isoName)
+        {
+            return _connection.Query<RamProduct>($@"exec GetAllRamProductsInCurrency N'{isoName}'");
+        }
+
+        public IEnumerable<RamProduct> GetAllInCurrency(Currency currency)
+        {
+            return _connection.Query<RamProduct>($@"exec GetAllRamProductsInCurrency N'{currency.IsoName}'");
         }
 
         public RamProduct GetByName(string name)
         {
-            return _connection.QueryFirstOrDefault<RamProduct>($@"select * from Ram_Product where name = N'{name}'");
+            return _connection.QueryFirstOrDefault<RamProduct>($@"exec GetRamProductByName N'{name}'");
         }
 
         public IEnumerable<string> GetAllManufacturers()
         {
-            return _connection.Query<string>($@"select distinct Manufacturer from Ram_Product");
+            return _connection.Query<string>($@"exec GetAllManufacturers");
         }
 
         public void Dispose()

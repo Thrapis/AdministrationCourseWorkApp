@@ -21,7 +21,8 @@ namespace TheRamShop.Models.PageModels
         public Hyperlink(Controller controller, string manufacturer)
         {
             Name = manufacturer;
-            Url = controller.Url.Action("Product", "Catalog", new { subcategory = manufacturer });
+            
+            Url = controller.Url.Action("Product", "Catalog", new { subcategory = manufacturer, name = "" });
         }
 
         public Hyperlink(Controller controller, RamProduct product)

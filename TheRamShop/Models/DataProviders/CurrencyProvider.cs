@@ -19,12 +19,12 @@ namespace TheRamShop.Models.DataProviders
 
         public IEnumerable<Currency> GetAll()
         {
-            return _connection.Query<Currency>($@"select iso_name IsoName, full_name FullName, abbreviated from Currency");
+            return _connection.Query<Currency>($@"exec GetAllCurrencies");
         }
 
         public Currency GetCurrencyByIsoName(string isoName)
         {
-            return _connection.QueryFirstOrDefault<Currency>($@"select iso_name IsoName, full_name FullName, abbreviated from Currency where ISO_NAME = N'{isoName}'");
+            return _connection.QueryFirstOrDefault<Currency>($@"exec GetCurrencyByIsoName N'{isoName}'");
         }
 
         public void Dispose()

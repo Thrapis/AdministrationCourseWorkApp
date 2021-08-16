@@ -8,6 +8,7 @@ using System.Web.Security;
 using TheRamShop.Models.Authentication;
 using TheRamShop.Models.DataBase;
 using TheRamShop.Models.DataEntities;
+using TheRamShop.Models.DataEntities.Composite;
 using TheRamShop.Models.DataPreparation;
 using TheRamShop.Models.DataProviders;
 using TheRamShop.Models.PageModels;
@@ -21,18 +22,15 @@ namespace TheRamShop.Controllers
         {
             DefaultPreparations.LoadPrimaryInfo(this);
 
+            SessionManager sessionManager = new SessionManager(Session);
+            Currency selectedCurrency = (Currency)sessionManager.GetValue("currency");
 
-            RamProductProvider productProvider = new RamProductProvider(MRConnection.GetConnection());
+            RamInfoProvider productProvider = new RamInfoProvider(MRConnection.GetConnection());
+            IEnumerable<RamInfo> infos = productProvider.GetAllInCurrency(selectedCurrency);
 
-            List<ProductCard> products = new List<ProductCard>();
-            foreach (RamProduct element in productProvider.GetAll())
-            {
-                products.Add(new ProductCard(this, element));
-            }
-            /*products.Add(new ProductInfo("Apple", Url.Action("Product", "Catalog", new { subcategory = "16GB", name = "Apple" }), 8.99m, "$", true, new byte[] { }));
-            products.Add(new ProductInfo("Orange", Url.Action("Product", "Catalog", new { subcategory = "8GB", name = "Orange" }), 7.99m, "$", true, new byte[] { }));
-            products.Add(new ProductInfo("Pineapple", Url.Action("Product", "Catalog", new { subcategory = "4GB", name = "Pineapple" }), 6.99m, "$", false, new byte[] { }));
-            products.Add(new ProductInfo("Kiwi", Url.Action("Product", "Catalog", new { subcategory = "2GB", name = "Kiwi" }), 5.99m, "$", true, new byte[] { }));*/
+
+            List<ProductCard> products = ProductCard.ConvertToProductCards(this, infos).ToList();
+            
             ViewBag.ProductList = products;
 
             return View();

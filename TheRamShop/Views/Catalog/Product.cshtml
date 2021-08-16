@@ -1,6 +1,8 @@
 ﻿@using TheRamShop.Models.PageModels
 @{
     ViewBag.Title = "Product Info";
+    ProductPage product = ViewBag.Product;
+    List<Review> reviews = ViewBag.Reviews;
 }
 
 <form name="cart_quantity" action="https://phoenixcart.org/demo/product_info.php?products_id=9&amp;currency=USD&amp;action=add_product" method="post" role="form">
@@ -8,22 +10,32 @@
 
     <div class="row is-product">
         <div class="col-sm-8 cm-pi-name">
-            <h3 class="display-4 display-5">@ViewBag.Product.Name</h3>
+            <h3 class="display-4 display-5">@product.Name</h3>
         </div>
 
 
         <div class="col-sm-4 cm-pi-price">
-            <h3 class="display-4 display-5 text-left text-sm-right">
-                <span class="productPrice">@ViewBag.Product.GetPrice()</span>
-            </h3>
+            
+            @if (product.NewPrice != "")
+            {
+                <h2 class="display-4 display-5 text-left text-sm-right">
+                    <del>@product.Price</del> <span class="productPrice text-danger productSpecialPrice">@product.NewPrice</span>
+                </h2>
+            }
+            else
+            {
+                <h2 class="display-4 display-5 text-left text-sm-right">
+                    <span class="productPrice">@product.Price</span>
+                </h2>
+            }
         </div>
 
 
         <div class="col-sm-12 cm-pi-review-stars">
             <ul class="list-inline">
-                <li class="list-inline-item 0">@ViewBag.Reviews.Count Reviews</li>
+                <li class="list-inline-item 0">@reviews.Count Reviews</li>
                 <li class="list-inline-item border-left ml-2 pl-3">
-                    @if (ViewBag.Reviews.Count == 0)
+                    @if (reviews.Count == 0)
                     {
                         <a href="@Url.Action("MakeReview******", "Catalog")">Be the first to review this product</a>
                     }
@@ -42,7 +54,7 @@
                     <div class="row">
                         <div class="col-sm-12 pi-gallery">
                             <a href="#lightbox" class="lb" data-toggle="modal" data-slide="0">
-                                <img src="@ViewBag.Product.GetPhotoForPage()" border="0" alt="Lime" class="img-fluid" title="@ViewBag.Product.Name">
+                                <img src="@product.GetPhotoForPage()" border="0" alt="Lime" class="img-fluid" title="@product.Name">
                             </a>
                         </div>
                         <div class="col-sm-12 pi-img-disclaimer">
@@ -54,25 +66,31 @@
                 </div>
                 <div class="col-sm-5">
                     <div class="row">
-                        <div class="col-sm-12 pi-options-attributes mt-2">
-                            <h6>Available Options</h6>
-
-                            <div class="form-group row">
-                                <label for="input_1" class="col-form-label col-sm-3 text-left text-sm-right">Box Size</label>
-                                <div class="col-sm-9">
-                                    <select name="id[1]" required="" aria-required="true" id="input_1" class="form-control">
-                                        <option value="" selected="selected">--- Please Select ---</option>
-                                        <option value="1">12</option><option value="2">24 (+$5.00)</option>
-                                    </select>
-                                    <span class="form-control-feedback text-danger"><i class="fas fa-asterisk"></i></span>
+                        @if (product.Sets.Count > 1 || !product.FastBuy)
+                        {
+                            <div class="col-sm-12 pi-options-attributes mt-2">
+                                <h6>Available Options</h6>
+                                <div class="form-group row">
+                                    <label for="input_1" class="col-form-label col-sm-3 text-left text-sm-right">Set Size</label>
+                                    <div class="col-sm-9">
+                                        <select name="set_id" required="" aria-required="true" id="input_1" class="form-control">
+                                            <option value="" selected="selected">--- Please Select ---</option>
+                                            @foreach (ProductSetSelection selection in product.Sets)
+                                            {
+                                                <option value="@selection.Id">@selection.Text</option>
+                                            }
+                                        </select>
+                                        <span class="form-control-feedback text-danger"><i class="fas fa-asterisk"></i></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+
                         <div class="col-sm-12 pi-buy-button mt-2">
                             <button data-has-attributes="0" data-in-stock="995" data-product-id="9" class="btn btn-success btn-block btn-lg btn-product-info btn-buy" type="submit">
                                 <span class="fas fa-shopping-cart" aria-hidden="true"></span> Add To Cart
                             </button>
-                            <input name="products_id" type="hidden" value="9" class="form-control">
+                            @*<input name="products_id" type="hidden" value="9" class="form-control">*@
                         </div>
                     </div>
                 </div>
@@ -92,11 +110,11 @@
             </div>
         </div>
 
-        @if (ViewBag.Reviews.Count != 0)
+        @if (reviews.Count != 0)
         {
             <div class="col-sm-12 cm-pi-reviews">
                 <h4>What our customers say...</h4>
-                @foreach (Review el in ViewBag.Reviews)
+                @foreach (Review el in reviews)
                 {
                     <div class="row">
                         <div class="col-sm-6">
@@ -133,6 +151,32 @@
             </div>
         }
     </div>
-
 </form>
+
+<div id="lightbox" class="modal fade" role="dialog" style="padding-right: 16px; display: none;" aria-modal="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="carousel slide" data-ride="carousel" tabindex="-1" id="carousel">
+                    <ol class="carousel-indicators"><li data-target="#carousel" data-slide-to="0" class="pointer active"></li></ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item text-center active">
+                            <img loading="lazy" src="@product.GetPhotoForPage()" border="0" alt="@product.Name" width="640" height="360" class="img-fluid" title="@product.Name">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <h5 class="text-uppercase mr-auto">Album for @product.Name</h5>
+                <a href="#" role="button" data-dismiss="modal" class="btn btn-primary px-3">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
 
